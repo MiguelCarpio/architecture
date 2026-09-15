@@ -1,0 +1,31 @@
+# yamllint disable rule:line-length
+# local-config: referenced, but not emitted by kustomize
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: baremetalhost-values
+  annotations:
+    config.kubernetes.io/local-config: "true"
+data:
+  metal3_inspection: disabled
+  edpm-compute-0:
+    online: true
+    labels:
+      app: openstack
+      nodeset: edpm
+      nodeName: edpm-compute-0
+      gpu: "true"
+      gpu_vendor: nvidia
+      gpu_model: rtx-pro-6000
+    bmc:
+      address: CHANGEME  # e.g. idrac-virtualmedia://<idrac-ip>/redfish/v1/Systems/System.Embedded.1
+      credentialsName: bmc-secret
+      disableCertificateVerification: true
+    bootMACAddress: CHANGEME  # MAC of the boot NIC
+    rootDeviceHints:
+      deviceName: /dev/sda  # CHANGEME — e.g. /dev/disk/by-path/pci-0000:41:00.0-nvme-1
+    preprovisioningNetworkDataName: OPTIONAL
+    preprovisioningNetworkData:
+      networkData: |
+        CHANGEME
